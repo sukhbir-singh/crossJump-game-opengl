@@ -8,7 +8,7 @@ int play=0;	// game's pause and play state
 int pausevariable=180;
 int movedown=0;
 int windowWidth=900,windowHeight=600;
-float x=450,y=80;	// (x,y) are the mid point of square
+float x=450,y=60;	// (x,y) are the mid point of square
 float xtest=0,ytest=121,speedtest=7;
 int attach=0;	// wheather to attach user with box or not
 float dx=0.0; // distance between player and inside box
@@ -48,7 +48,8 @@ void display(void)
 		glVertex3f(xtest+80,ytest-20,0);
 		glVertex3f(xtest+80,ytest+20,0);
 		glVertex3f(xtest,ytest+20,0);
-		
+
+
 				
 	}
 	glEnd();
@@ -93,6 +94,15 @@ void againDisplay()
 		if(xtest>=850)
 			{xtest=0;}
 
+		//game over conditions
+		if(y>106)
+		{
+			if(attach==0) 
+			{
+				cout<<"Game Over\n";
+				x=450,y=60;
+			}
+		}
 
 
 		
@@ -117,19 +127,18 @@ void key(unsigned char key,int xm,int ym)
 	else if(key==112) 	// Game pause and play using key 'p'
 	{ 	cout<<"Game Starts";
 		if(play==0) 
-		{play=1; glutIdleFunc(againDisplay); x=450,y=80;}
-		//else {play=0; glutIdleFunc(NULL);}
+		{play=1; glutIdleFunc(againDisplay); }
+		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
 
 
-	if ((y>=106 && y<=151)&&(xtest<=x && xtest+80>=x))
+	if ((y>=106 && y<=151)&&(xtest<=x && xtest+80>=x))		// that's the best place to make this...
 		{
 			dx=x-xtest;
-			cout<<"attach =1\n";
+			cout<<"attach=1\n";
 			attach=1;
 
-		}else {attach=0; cout<<"attach =0\n";}
-	
+		}else {attach=0; cout<<"attach=0\n";}
 	
 	
 
