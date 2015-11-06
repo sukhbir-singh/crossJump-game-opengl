@@ -36,7 +36,7 @@ void display(void)
 	glColor3f(1.0,1.0,1.0);
 	// BASIC LINES --WHITE
 	glBegin(GL_LINES);
-	for(int a=100;a<=600;a+=100)
+	for(int a=121;a<=600;a+=50)
 	{
 	   glVertex3i(0,a,0);
 	   glVertex3i(900,a,0);	
@@ -49,6 +49,9 @@ void display(void)
 	{
 	glBegin(GL_QUADS);
 	{
+
+
+
 		for(int j=0;j<7;j++)
 		{
 			glVertex3f(xtest[j],ytest[j]-25,0);
@@ -58,12 +61,24 @@ void display(void)
 
 		}
 
-		glColor3f(0.50,0.50,0.50);	
+		
+		glColor3f(0.30,0.70,0.30);	
+		glVertex3f(0,101,0);	// bottom area
+		glVertex3f(windowWidth,101,0);
+		glVertex3f(windowWidth,0,0);
+		glVertex3f(0,0,0);
 
-		glVertex3f(0,246,0);
+		glColor3f(0.10,0.80,0.50);	
+		glVertex3f(0,246,0);		// middle area
 		glVertex3f(windowWidth,246,0);
 		glVertex3f(windowWidth,306,0);
 		glVertex3f(0,306,0);
+
+		glColor3f(0.10,0.90,0.20);	
+		glVertex3f(0,502,0);	// top area
+		glVertex3f(windowWidth,502,0);
+		glVertex3f(windowWidth,windowHeight,0);
+		glVertex3f(0,windowHeight,0);
 
 		glColor3f(1.0,1.0,1.0);
 
