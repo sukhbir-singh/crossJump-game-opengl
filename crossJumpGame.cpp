@@ -14,10 +14,11 @@ float x=450,y=60;	// (x,y) are the mid point of square
 int attach=0;	// wheather to attach user with box or not
 float dx=0.0; // distance between player and inside box
 
-float xtest[7]={0,850,20,13,857,100,800};
-float ytest[7]={121,171,221,327,377,427,477};
-float speedtest[7]={0.4,-0.3,0.45,0.42,-0.52,0.47,-0.56};
-float width[7]={80,100,90,120,97,70,85};
+float xtest[8]={0,850,20,0,13,857,100,800};
+float ytest[8]={121,171,221,271,327,377,427,477};
+float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
+float width[8]={120,130,140,windowWidth,150,127,117,110};
+int attachedbox=-1;
 
 
 void init(void)
@@ -50,9 +51,7 @@ void display(void)
 	glBegin(GL_QUADS);
 	{
 
-
-
-		for(int j=0;j<7;j++)
+	for(int j=0;j<8;j++)
 		{
 			glVertex3f(xtest[j],ytest[j]-25,0);
 			glVertex3f(xtest[j]+width[j],ytest[j]-25,0);
@@ -122,13 +121,13 @@ glOrtho(0.0,(GLdouble)w,0.0,(GLdouble)h,0.0,1.0);
 void againDisplay()
 {
 		//	xtest=xtest+speedtest;
-		for(int j=0;j<7;j++)
+		for(int j=0;j<8;j++)
 		{
 			xtest[j]=xtest[j]+speedtest[j];
 		}
 
 		// making boxes continues ones
-		for(int j=0;j<7;j++)
+		for(int j=0;j<8;j++)
 		{
 			if(xtest[j]>900)
 			{xtest[j]=0;}
@@ -137,8 +136,8 @@ void againDisplay()
 
 		}
 		
-		//game over conditions
-		if(y>106)
+		//Game over conditions
+		if((y>121-25 &&  y<246) || (y>306 && y<502))
 		{
 			if(attach==0) 
 			{
@@ -146,7 +145,7 @@ void againDisplay()
 				x=450,y=60;
 			}
 		}
-		if((y>=246)&&(y<=306))	// middle area is safe zone
+		if((y>=246)&&(y<=306)||(y>802))	// middle area is safe zone
 		{
 			attach=1;
 		}
@@ -178,6 +177,18 @@ void key(unsigned char key,int xm,int ym)
 		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
 
+int flag=0;
+	
+	/*if(y>=800)
+	{
+		play=0;
+		glutIdleFunc(NULL);
+		attach=1;
+		cout<<"You are on Winner.\n";
+		flag=1;
+			
+	}*/
+
 	//  to make players box remain on the rail boxes  
 /*	if ((y>=96 && y<=146)&&(xtest[0]<=x && xtest[0]+width[0]>=x))		// that's the best place to make this...
 		{
@@ -187,20 +198,21 @@ void key(unsigned char key,int xm,int ym)
 
 		}else {attach=0; cout<<"attach=0\n";}
 		*/
-	int flag=0;
+	
 
-	for(int j=0;j<7;j++)
-	{
-		if ((y>=ytest[j]-25 && y<=ytest[j]+25 )&&( xtest[j]<=x && xtest[j]+width[j]>=x))		// that's the best place to make this...
+	for(int j=0;j<8;j++)
+	{	// that's the best place to make this...
+		if ((y>=ytest[j]-25 && y<=ytest[j]+25 )&&( xtest[j]<=x && xtest[j]+width[j]>=x))		
 		{
 			dx=x-xtest[0];
 			cout<<"attach=1\n";
 			attach=1;
+			cout<<"You are on "<<j<<" - box.\n";
 			flag=1;
+			attachedbox=j;
 			break;
 
 		}
-
 
 	}
 
