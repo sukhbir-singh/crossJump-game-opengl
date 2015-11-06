@@ -19,7 +19,8 @@ float xtest[8]={0,850,20,0,13,857,100,800};
 float ytest[8]={121,171,221,271,327,377,427,477};
 float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
 //float speedtest[8]={0,0,0,0,0,0,0,0};
-float width[8]={120,130,140,windowWidth,150,127,117,110};
+//float width[8]={120,130,140,windowWidth,150,127,127,120};
+float width[8]={170,170,170,windowWidth,170,177,167,160};
 int attachedbox=-1;
 
 
@@ -155,6 +156,7 @@ void againDisplay()
 			attach=1;
 		}
 
+		
 
 	glutPostRedisplay();
 	 }
@@ -176,7 +178,7 @@ void key(unsigned char key,int xm,int ym)
 	else if(key==112) 	// Game pause and play using key 'p'
 	{ 	cout<<"Game Starts";
 		if(play==0) 
-		{play=1; glutIdleFunc(againDisplay); }
+		{play=1; glutIdleFunc(againDisplay); if(x>=560){x=450; y=60;}  }
 		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
 
@@ -208,6 +210,12 @@ int flag=0;
 	float xtest[7]={0,850,20,13,857,100,800};
 	float ytest[7]={121,171,221,327,377,427,477};
 	*/
+
+	//Game win condition
+		if(y>=560)
+		{
+			cout<<"YOU WON\n"; play=0; glutIdleFunc(NULL);
+		}
 
 }
 
