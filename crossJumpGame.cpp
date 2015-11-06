@@ -9,9 +9,15 @@ int pausevariable=180;
 int movedown=0;
 int windowWidth=900,windowHeight=600;
 float x=450,y=60;	// (x,y) are the mid point of square
-float xtest=0,ytest=121,speedtest=7;
+//float xtest=0,ytest=121,speedtest=0.4;
+
 int attach=0;	// wheather to attach user with box or not
 float dx=0.0; // distance between player and inside box
+
+float xtest[7]={0,850,20,13,857,100,800};
+float ytest[7]={121,171,221,327,377,427,477};
+float speedtest[7]={0.4,-0.3,0.45,0.42,-0.52,0.47,-0.56};
+float width[7]={80,100,90,120,97,70,85};
 
 
 void init(void)
@@ -39,18 +45,28 @@ void display(void)
 
 
 	//BOXES
-	if(play)
+	//if(play)
 	{
 	glBegin(GL_QUADS);
-
 	{
-		glVertex3f(xtest,ytest-20,0);
-		glVertex3f(xtest+80,ytest-20,0);
-		glVertex3f(xtest+80,ytest+20,0);
-		glVertex3f(xtest,ytest+20,0);
+		for(int j=0;j<7;j++)
+		{
+			glVertex3f(xtest[j],ytest[j]-25,0);
+			glVertex3f(xtest[j]+width[j],ytest[j]-25,0);
+			glVertex3f(xtest[j]+width[j],ytest[j]+25,0);
+			glVertex3f(xtest[j],ytest[j]+25,0);
 
+		}
 
-				
+		glColor3f(0.50,0.50,0.50);	
+
+		glVertex3f(0,246,0);
+		glVertex3f(windowWidth,246,0);
+		glVertex3f(windowWidth,306,0);
+		glVertex3f(0,306,0);
+
+		glColor3f(1.0,1.0,1.0);
+
 	}
 	glEnd();
 	}
@@ -58,7 +74,7 @@ void display(void)
 	int xtemp=x;
 	if(attach==1)
 	{
-		x=xtest+dx;
+		x=xtest[0]+dx;
 		//cout<<"xtest "<<xtest<<" x"<<x<<"\n";
 	}
 
@@ -90,10 +106,22 @@ glOrtho(0.0,(GLdouble)w,0.0,(GLdouble)h,0.0,1.0);
 
 void againDisplay()
 {
-		xtest=xtest+0.4;
-		if(xtest>=850)
-			{xtest=0;}
+		//	xtest=xtest+speedtest;
+		for(int j=0;j<7;j++)
+		{
+			xtest[j]=xtest[j]+speedtest[j];
+		}
 
+		// making boxes continues ones
+		for(int j=0;j<7;j++)
+		{
+			if(xtest[j]>900)
+			{xtest[j]=0;}
+			else if(xtest[j]<0)
+				{xtest[j]=900;}
+
+		}
+		
 		//game over conditions
 		if(y>106)
 		{
@@ -132,9 +160,9 @@ void key(unsigned char key,int xm,int ym)
 	}
 
 
-	if ((y>=106 && y<=151)&&(xtest<=x && xtest+80>=x))		// that's the best place to make this...
+	if ((y>=101 && y<=155)&&(xtest[0]<=x && xtest[0]+80>=x))		// that's the best place to make this...
 		{
-			dx=x-xtest;
+			dx=x-xtest[0];
 			cout<<"attach=1\n";
 			attach=1;
 
@@ -147,6 +175,7 @@ void key(unsigned char key,int xm,int ym)
 
 int main(int argc,char** argv)
 {
+	
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
 	glutInitWindowSize(windowWidth,windowHeight);
