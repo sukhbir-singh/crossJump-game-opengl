@@ -146,6 +146,10 @@ void againDisplay()
 				x=450,y=60;
 			}
 		}
+		if((y>=246)&&(y<=306))	// middle area is safe zone
+		{
+			attach=1;
+		}
 
 
 		
@@ -174,16 +178,38 @@ void key(unsigned char key,int xm,int ym)
 		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
 
-
-	if ((y>=101 && y<=155)&&(xtest[0]<=x && xtest[0]+80>=x))		// that's the best place to make this...
+	//  to make players box remain on the rail boxes  
+/*	if ((y>=96 && y<=146)&&(xtest[0]<=x && xtest[0]+width[0]>=x))		// that's the best place to make this...
 		{
 			dx=x-xtest[0];
 			cout<<"attach=1\n";
 			attach=1;
 
 		}else {attach=0; cout<<"attach=0\n";}
-	
-	
+		*/
+	int flag=0;
+
+	for(int j=0;j<7;j++)
+	{
+		if ((y>=ytest[j]-25 && y<=ytest[j]+25 )&&( xtest[j]<=x && xtest[j]+width[j]>=x))		// that's the best place to make this...
+		{
+			dx=x-xtest[0];
+			cout<<"attach=1\n";
+			attach=1;
+			flag=1;
+			break;
+
+		}
+
+
+	}
+
+	if(flag==0) {attach=0; cout<<"attach=0\n";} 
+
+	/*
+	float xtest[7]={0,850,20,13,857,100,800};
+	float ytest[7]={121,171,221,327,377,427,477};
+	*/
 
 }
 
