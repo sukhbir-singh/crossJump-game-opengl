@@ -5,10 +5,8 @@
 using namespace std;
 
 int play=0;	// game's pause and play state
-int pausevariable=180;
-int movedown=0;
 int windowWidth=900,windowHeight=600;
-float x=450,y=60;	// (x,y) are the mid point of square
+float x=410,y=60;	// (x,y) are the mid point of square
 //float xtest=0,ytest=121,speedtest=0.4;
 
 int attach=0;	// wheather to attach user with box or not
@@ -17,11 +15,21 @@ float dx=0.0; // distance between player and inside box
 float xtest[8]={0,850,20,0,13,857,100,800};
 //float xtest[8]={200,200,200,200,200,200,200,200s};
 float ytest[8]={121,171,221,271,327,377,427,477};
-float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
-//float speedtest[8]={0,0,0,0,0,0,0,0};
+//float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
+//float speedtest[8]={0.3,-0.23,.130,-0,0.33,-0.43,0.33,-0.13};
+float speedtest[8]={0.5,-0.03,.130,-0,0.23,-0.29,0.33,-0.13};
+
+
 //float width[8]={120,130,140,windowWidth,150,127,127,120};
 float width[8]={170,170,170,windowWidth,170,177,167,160};
 int attachedbox=-1;
+
+//--------for second player---------
+float x1=450,y1=60;	// 2nd player
+int attach1=0;
+float dx1=0.0;
+int attachedbox1=-1;
+
 
 
 void init(void)
@@ -96,15 +104,29 @@ void display(void)
 		//cout<<"xtest "<<xtest<<" x"<<x<<"\n";
 	}
 
+	//2player
+	int xtemp1=x1;
+	if(attach1==1)
+	{
+		x1=xtest[attachedbox1]+dx1;
+	}
 
-
-	//PLAYER BOX -- ORANGE wasd
+	//PLAYER1 BOX -- ORANGE wasd
 	glColor3f(0.53,0.224,0.100);	// set color
 	glBegin(GL_POLYGON);
 	glVertex3f(x-15,y-15,0);
 	glVertex3f(x+15,y-15,0);
 	glVertex3f(x+15,y+15,0);
 	glVertex3f(x-15,y+15,0);
+	glEnd();
+
+	//PLAYER2 BOX -- YELLOW ijkl
+	glColor3f(0,.5,1.0);	// set color
+	glBegin(GL_POLYGON);
+	glVertex3f(x1-15,y1-15,0);
+	glVertex3f(x1+15,y1-15,0);
+	glVertex3f(x1+15,y1+15,0);
+	glVertex3f(x1-15,y1+15,0);
 	glEnd();
 
 	//x=xtemp;
@@ -126,7 +148,6 @@ glOrtho(0.0,(GLdouble)w,0.0,(GLdouble)h,0.0,1.0);
 
 void againDisplay()
 {	
-		//	xtest=xtest+speedtest;
 		for(int j=0;j<8;j++)
 		{
 			xtest[j]=xtest[j]+speedtest[j];
@@ -147,13 +168,27 @@ void againDisplay()
 		{
 			if(attach==0) 
 			{
-				cout<<"Game Over\n";
-				x=450,y=60;
+				cout<<"Game Over Player1\n";
+				x=410,y=60;
 			}
 		}
 		if((y>=246)&&(y<=306)||(y>802))	// middle area is safe zone
 		{
 			attach=1;
+		}
+
+		//Game over conditions for player2
+		if((y1>121-25 &&  y1<246) || (y1>306 && y1<502))
+		{
+			if(attach1==0) 
+			{
+				cout<<"Game Over Player2\n";
+				x1=450,y1=60;
+			}
+		}
+		if((y1>=246)&&(y1<=306)||(y1>802))	// middle area is safe zone
+		{
+			attach1=1;
 		}
 
 		
@@ -178,9 +213,25 @@ void key(unsigned char key,int xm,int ym)
 	else if(key==112) 	// Game pause and play using key 'p'
 	{ 	cout<<"Game Starts";
 		if(play==0) 
-		{play=1; glutIdleFunc(againDisplay); if(x>=560){x=450; y=60;}  }
+		{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60;}   }
 		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
+
+	//for player2
+	if(key==106)
+	{x1=x1-9;	}
+	else if(key==105)
+		{y1=y1+9;}
+	else if(key==108)
+		{x1=x1+9; }
+	else if(key==107)
+		{y1=y1-9; }
+	/*else if(key==112) 	// Game pause and play using key 'p'
+	{ 	cout<<"Game Starts";
+		if(play==0) 
+		{play=1; glutIdleFunc(againDisplay); if(x>=560){x=450; y=60;}  }
+		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
+	}*/
 
 int flag=0;
 	
@@ -196,7 +247,7 @@ int flag=0;
 			attach=1;
 			flag=1;
 			attachedbox=j;
-			cout<<"You are on "<<j<<" - box. and attachedbox is "<<attachedbox<<"\n";
+			cout<<"Player1 is on "<<j<<" - box. and attachedbox is "<<attachedbox<<"\n";
 			
 			break;
 
@@ -206,15 +257,43 @@ int flag=0;
 
 	if(flag==0) {attach=0; cout<<"x: "<<x<<" y: "<<y<<" and Attach1=0\n";} 
 
-	/*
-	float xtest[7]={0,850,20,13,857,100,800};
-	float ytest[7]={121,171,221,327,377,427,477};
-	*/
+	// for player2
+	int flag1=0;
+	
+	for(int j=0;j<8;j++)
+	{	// that's the best place to make this...
+		
+	
+		if ((y1>=ytest[j]-25 && y1<=ytest[j]+25 )&&( xtest[j]<=x1 && xtest[j]+width[j]>=x1))		
+		{
+			dx1=x1-xtest[j];
+			if(dx1<0) dx1=-dx1;
+			cout<<"attach1=1\n";
+			attach1=1;
+			flag1=1;
+			attachedbox1=j;
+			cout<<"Player2 is on "<<j<<" - box. and attachedbox is "<<attachedbox<<"\n";
+			
+			break;
+
+		}else {cout<<"y1 "<<y1<<" ytest "<<ytest[j]<<" j "<<j<<"\n";}
+
+	}
+
+	if(flag1==0) {attach1=0; cout<<"x1: "<<x1<<" y1: "<<y1<<" and Attach1=0\n";} 
+
+	
+
 
 	//Game win condition
 		if(y>=560)
 		{
-			cout<<"YOU WON\n"; play=0; glutIdleFunc(NULL);
+			cout<<"PLAYER1 WON\n"; play=0; glutIdleFunc(NULL);
+		}
+
+		if(y1>=560)
+		{
+			cout<<"PLAYER2 WON\n"; play=0; glutIdleFunc(NULL);
 		}
 
 }
