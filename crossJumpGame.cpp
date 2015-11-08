@@ -17,7 +17,7 @@ float xtest[8]={0,850,20,0,13,857,100,800};
 float ytest[8]={121,171,221,271,327,377,427,477};
 //float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
 //float speedtest[8]={0.3,-0.23,.130,-0,0.33,-0.43,0.33,-0.13};
-float speedtest[8]={0.5,-0.03,.130,-0,0.23,-0.29,0.33,-0.13};
+float speedtest[8]={0.45,-0.13,.630,-0,0.76,-0.29,0.83,-0.73};
 
 
 //float width[8]={120,130,140,windowWidth,150,127,127,120};
@@ -112,7 +112,7 @@ void display(void)
 	}
 
 	//PLAYER1 BOX -- ORANGE wasd
-	glColor3f(0.53,0.224,0.100);	// set color
+	glColor3f(0.83,0.224,0.100);	// set color
 	glBegin(GL_POLYGON);
 	glVertex3f(x-15,y-15,0);
 	glVertex3f(x+15,y-15,0);
@@ -121,7 +121,7 @@ void display(void)
 	glEnd();
 
 	//PLAYER2 BOX -- YELLOW ijkl
-	glColor3f(0,.5,1.0);	// set color
+	glColor3f(0.1,.324,0.9);	// set color
 	glBegin(GL_POLYGON);
 	glVertex3f(x1-15,y1-15,0);
 	glVertex3f(x1+15,y1-15,0);
@@ -129,6 +129,14 @@ void display(void)
 	glVertex3f(x1-15,y1+15,0);
 	glEnd();
 
+	glColor3f(1.0,1.0,0.2);
+
+	//glLineStipple(1, 0x3F07);
+	//glEnable(GL_LINE_STIPPLE);
+	glBegin(GL_LINES);
+	glVertex3f(0,560,0);
+	glVertex3f(windowWidth,560,0);	
+	glEnd();
 	//x=xtemp;
 
 	glFlush();					// forces drawing to complete
