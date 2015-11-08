@@ -4,6 +4,7 @@
 #include "GL/gl.h"
 using namespace std;
 
+int playerwins=0;	// hold value corresponding to player wins
 int play=0;	// game's pause and play state
 int windowWidth=900,windowHeight=600;
 float x=410,y=60;	// (x,y) are the mid point of square
@@ -17,11 +18,16 @@ float xtest[8]={0,850,20,0,13,857,100,800};
 float ytest[8]={121,171,221,271,327,377,427,477};
 //float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
 //float speedtest[8]={0.3,-0.23,.130,-0,0.33,-0.43,0.33,-0.13};
-float speedtest[8]={0.45,-0.13,.630,-0,0.76,-0.29,0.83,-0.73};
+
+float speedtest[8]={0.45,-0.13,.630,-0,0.76,-0.29,0.73,-0.68};	// BEST SETTINGS TILL NOW
+float width[8]={170,170,170,windowWidth,180,177,167,180};	// best settings
+
+//float speedtest[8]={0.4,-0.4,.4,-0,0.4,-0.4,0.4,-0.4};	// for testing
+//float width[8]={370,370,370,windowWidth,370,377,367,360};	// for testing
 
 
 //float width[8]={120,130,140,windowWidth,150,127,127,120};
-float width[8]={170,170,170,windowWidth,170,177,167,160};
+
 int attachedbox=-1;
 
 //--------for second player---------
@@ -31,6 +37,9 @@ float dx1=0.0;
 int attachedbox1=-1;
 
 
+int firsttime=0;
+
+void drawBitmapText(const char *string,float x,float y,float z) ;
 
 void init(void)
 {
@@ -38,6 +47,8 @@ void init(void)
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho(0.0f,windowWidth,0.0f,windowHeight,0.0f,1.0f);
+   playerwins=0;
+
 }
 
 void drawBitmapText(const char *string,float x,float y,float z) 
@@ -52,10 +63,9 @@ void drawBitmapText(const char *string,float x,float y,float z)
 }
 
 void display(void)
-{
+{ 
 	
-	glClear(GL_COLOR_BUFFER_BIT);	// clear color buffer
-	
+	glClear(GL_COLOR_BUFFER_BIT);	// clear color buffer   	
 	
 	glColor3f(1.0,1.0,1.0);
 	// BASIC LINES --WHITE
@@ -122,14 +132,55 @@ void display(void)
 		x1=xtest[attachedbox1]+dx1;
 	}
 
-	glColor3f(0.3,1.0,0.3);
+	glColor3f(0.5,1.0,0.5);
 	drawBitmapText("FINISH LINE",windowWidth/2-60,565,0);
 	glColor3f(0.30,0.90,0.85);	
 	drawBitmapText("SAFE ZONE",windowWidth/2-60,(246+306)/2-8,0);
-	glColor3f(0.80,0.20,0.25);	
-	drawBitmapText("PLAYER1",150,50,0);
-	glColor3f(0.30,0.30,0.85);	
-	drawBitmapText("PLAYER2",windowWidth/2+200-30,50,0);
+
+	if(playerwins==0)
+	{
+		glColor3f(0.80,0.40,0.25);	
+		drawBitmapText("PLAYER1",150,50,0);
+		glColor3f(0.30,0.40,0.85);	
+		drawBitmapText("PLAYER2",windowWidth/2+200-30,50,0);
+
+		if(firsttime==0)
+		{glColor3f(1.0,1.0,1.0);	
+		drawBitmapText("Hit 'p' to Start/ Pause/ Restart the Game#CrossJump",windowWidth/2-278,13,0);}
+		
+	}
+
+
+	if(playerwins==1)
+	{
+		glBegin(GL_POLYGON);
+		glColor3f(0.83,0.224,0.100);
+		glVertex3f(0,246,0);		
+		glVertex3f(windowWidth,246,0);
+		glVertex3f(windowWidth,306,0);
+		glVertex3f(0,306,0);
+		glEnd();
+	
+		glColor3f(1.0,1.0,1.0);	
+		drawBitmapText("PLAYER1 WINS THE GAME!!!",windowWidth/2-360,(246+306)/2-8,0);
+
+	}
+	else if(playerwins==2)
+	{
+		glBegin(GL_POLYGON);
+		glColor3f(0.1,.324,0.9);
+		glVertex3f(0,246,0);		
+		glVertex3f(windowWidth,246,0);
+		glVertex3f(windowWidth,306,0);
+		glVertex3f(0,306,0);
+		glEnd();
+
+
+		glColor3f(1.0,1.0,1.0);	
+		drawBitmapText("PLAYER2 WINS THE GAME!!!",windowWidth/2+30,(246+306)/2-8,0);
+
+		
+	}
 
 	//PLAYER1 BOX -- ORANGE wasd
 	glColor3f(0.83,0.224,0.100);	// set color
@@ -141,7 +192,7 @@ void display(void)
 	glEnd();
 
 
-	//PLAYER2 BOX -- YELLOW ijkl
+	//PLAYER2 BOX -- BLUE ijkl
 	glColor3f(0.1,.324,0.9);	// set color
 	glBegin(GL_POLYGON);
 	glVertex3f(x1-15,y1-15,0);
@@ -149,6 +200,19 @@ void display(void)
 	glVertex3f(x1+15,y1+15,0);
 	glVertex3f(x1-15,y1+15,0);
 	glEnd();
+
+	if(playerwins!=0)
+	{
+		glColor3f(0.2,0.2,0.2);	
+		glVertex3f(0,101,0);	// bottom area
+		glVertex3f(windowWidth,101,0);
+		glVertex3f(windowWidth,0,0);
+		glVertex3f(0,0,0);
+
+		glColor3f(1.0,1.0,1.0);	
+		drawBitmapText("Press 'p' to Restart the Game#CrossJump",windowWidth/2-248,50,0);
+	
+	}
 
 	glColor3f(1.0,1.0,0.2);
 
@@ -159,8 +223,6 @@ void display(void)
 	glVertex3f(windowWidth,560,0);	
 	glEnd();
 	//x=xtemp;
-
-
 
 	glFlush();					// forces drawing to complete
 	
@@ -201,6 +263,7 @@ void againDisplay()
 			{
 				cout<<"Game Over Player1\n";
 				x=410,y=60;
+
 			}
 		}
 		if((y>=246)&&(y<=306)||(y>802))	// middle area is safe zone
@@ -243,8 +306,10 @@ void key(unsigned char key,int xm,int ym)
 		{y=y-9; }
 	else if(key==112) 	// Game pause and play using key 'p'
 	{ 	cout<<"Game Starts";
+		firsttime=1;
+
 		if(play==0) 
-		{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60;}   }
+		{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
 		else {play=0; glutIdleFunc(NULL);}	// In  pause also players can move
 	}
 
@@ -319,11 +384,13 @@ int flag=0;
 	//Game win condition
 		if(y>=560)
 		{
+			playerwins=1;
 			cout<<"PLAYER1 WON\n"; play=0; glutIdleFunc(NULL);
 		}
 
 		if(y1>=560)
 		{
+			playerwins=2;
 			cout<<"PLAYER2 WON\n"; play=0; glutIdleFunc(NULL);
 		}
 
