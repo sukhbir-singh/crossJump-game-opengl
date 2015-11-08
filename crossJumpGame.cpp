@@ -341,6 +341,9 @@ void key(unsigned char key,int xm,int ym)
 				xtest[m]=xtest1[m];
 				width[m]=width1[m];
 			}
+
+			// copied 'p' condition
+			{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
 		}
 		else if(key=='2')
 		{
@@ -355,6 +358,10 @@ void key(unsigned char key,int xm,int ym)
 				xtest[m]=xtest1[m];
 				width[m]=width1[m];
 			}
+
+			// copied 'p' condition
+			{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
+
 		}
 		else if(key=='3')
 		{
@@ -373,6 +380,9 @@ void key(unsigned char key,int xm,int ym)
 			//float xtest[8]={200,200,200,200,200,200,200,200};
 			//float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
 			//float speedtest[8]={0.3,-0.23,.130,-0,0.33,-0.43,0.33,-0.13};
+
+			// copied 'p' condition
+			{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
 		}
 		else if(key=='4')
 		{
@@ -389,6 +399,9 @@ void key(unsigned char key,int xm,int ym)
 				xtest[m]=xtest1[m];
 				width[m]=width1[m];
 			}
+
+			// copied 'p' condition
+			{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
 		}
 		else if(key=='5')
 		{
@@ -405,6 +418,9 @@ void key(unsigned char key,int xm,int ym)
 				xtest[m]=xtest1[m];
 				width[m]=width1[m];
 			}
+
+			// copied 'p' condition
+			{play=1; glutIdleFunc(againDisplay); if(y>=560 || y1>=560 ){x=410; y=60; x1=450; y1=60; playerwins=0;}   }
 		}
 
 	}
