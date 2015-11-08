@@ -19,7 +19,7 @@ float ytest[8]={121,171,221,271,327,377,427,477};
 //float speedtest[8]={0.4,-0.3,0.45,0,0.42,-0.52,0.47,-0.56};
 //float speedtest[8]={0.3,-0.23,.130,-0,0.33,-0.43,0.33,-0.13};
 
-float speedtest[8]={0.45,-0.13,.630,-0,0.76,-0.29,0.73,-0.68};	// BEST SETTINGS TILL NOW
+float speedtest[8]={0.45,-0.27,0.630,-0,0.76,-0.29,0.73,-0.68};	// BEST SETTINGS TILL NOW
 float width[8]={170,170,170,windowWidth,180,177,167,180};	// best settings
 
 //float speedtest[8]={0.4,-0.4,.4,-0,0.4,-0.4,0.4,-0.4};	// for testing
@@ -249,11 +249,16 @@ void againDisplay()
 		// making boxes continues ones
 		for(int j=0;j<8;j++)
 		{
-			if(xtest[j]>900)
+			/*if(xtest[j]>900)
 			{xtest[j]=0;}
 			else if(xtest[j]<0)
-				{xtest[j]=900;}
+				{xtest[j]=900;}*/
 
+
+			if(xtest[j]>windowWidth)
+			{xtest[j]=0-width[j]+1;}
+			else if(xtest[j]<=0-width[j])
+				{xtest[j]=windowWidth;}
 		}
 		
 		//Game over conditions
