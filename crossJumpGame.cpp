@@ -40,6 +40,17 @@ void init(void)
    glOrtho(0.0f,windowWidth,0.0f,windowHeight,0.0f,1.0f);
 }
 
+void drawBitmapText(const char *string,float x,float y,float z) 
+{  // To write text on screen
+    const char *c;
+    glRasterPos3f(x, y,z);
+
+    for (c=string; *c != '\0'; c++) 
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+    }
+}
+
 void display(void)
 {
 	
@@ -111,6 +122,15 @@ void display(void)
 		x1=xtest[attachedbox1]+dx1;
 	}
 
+	glColor3f(0.3,1.0,0.3);
+	drawBitmapText("FINISH LINE",windowWidth/2-60,565,0);
+	glColor3f(0.30,0.90,0.85);	
+	drawBitmapText("SAFE ZONE",windowWidth/2-60,(246+306)/2-8,0);
+	glColor3f(0.80,0.20,0.25);	
+	drawBitmapText("PLAYER1",150,50,0);
+	glColor3f(0.30,0.30,0.85);	
+	drawBitmapText("PLAYER2",windowWidth/2+200-30,50,0);
+
 	//PLAYER1 BOX -- ORANGE wasd
 	glColor3f(0.83,0.224,0.100);	// set color
 	glBegin(GL_POLYGON);
@@ -119,6 +139,7 @@ void display(void)
 	glVertex3f(x+15,y+15,0);
 	glVertex3f(x-15,y+15,0);
 	glEnd();
+
 
 	//PLAYER2 BOX -- YELLOW ijkl
 	glColor3f(0.1,.324,0.9);	// set color
@@ -138,6 +159,8 @@ void display(void)
 	glVertex3f(windowWidth,560,0);	
 	glEnd();
 	//x=xtemp;
+
+
 
 	glFlush();					// forces drawing to complete
 	
