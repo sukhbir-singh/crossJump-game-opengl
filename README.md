@@ -43,4 +43,9 @@ Player2 can move around the area using keys w(UP), a(LEFT), d(RIGHT), s(DOWN)
 Game consists of 5 Levels of varying difficulty. Levels can be selected by pressing any of the keys
 1,2,3,4,5 during Pause screen (Pause screen appears when 'p' is pressed during gameplay.)
 
+###Screenshots:
+![Screenshot 1](screenshot1.png?raw=true "Instruction Screen")
+![Screenshot 2](screenshot2.png?raw=true "Stage 3 Screen")
+![Screenshot 3](screenshot3.png?raw=true "Winner Screen")
+![Screenshot 4](screenshot4.png?raw=true "Stage 5 Screen")
 
