@@ -1,4 +1,4 @@
-## OpenGl-Game--CrossJump
+## OpenGl-Game : CrossJump
 
 ### Introduction: 
 CrossJump is a two player game. It consists of 5 Levels of difficulty (which can be selected by 
