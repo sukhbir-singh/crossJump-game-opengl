@@ -1,4 +1,4 @@
-## OpenGl-Game--CrossJump
+## OpenGL-Game--CrossJump
 
 ### Introduction: 
 CrossJump is a two player game. It consists of 5 Levels of difficulty (which can be selected by 
@@ -10,18 +10,21 @@ Both players complete against each other to reach the finishing line as fast as 
 Controls(Player1: i j k l)(Player2: w a s d) of both players is given below. 
 
 ### How to install:
-Game is created in c++ using openGl, so only game requirement is opengl and c++ compiler installed on system,
-If openGL is installed on the system (If not please Google it), just compile and run the game.
+Game is developed in C++ using OpenGL, so only game requirement is OpenGL and C++ compiler installed on system,
+If OpenGL is installed on the system (If not please Google it), just compile and run the game.
 
-To install freeGlut (inplace for openGL) in linux, run following command:
+To install freeGlut (inplace for OpenGL) in linux, run following command:
+```
 sudo apt-get install freeglut3-dev
-
+```
 And for compiling and executing the Game .cpp file, run following commands:
+```
 g++ crossJumpGame.cpp -lglut -lGL
-
+```
 this will make a.out file, use following command to run it:
+```
 ./a.out
-
+```
 ### Game info
 After Starting the Game (any level), 
 Players have to move from Starting platform to Middle platform (known as SAFE ZONE) to Destination Platform.
